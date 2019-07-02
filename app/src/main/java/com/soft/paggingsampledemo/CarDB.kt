@@ -1,6 +1,7 @@
 package com.soft.paggingsampledemo
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -19,16 +20,17 @@ abstract class CarDB : RoomDatabase() {
         fun getInstance(context: Context): CarDB {
             if (instance == null) {
                 instance = Room.databaseBuilder(context.applicationContext, CarDB::class.java, "carDatabase")
-                    /*.addCallback(object : RoomDatabase.Callback() {
+                    .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
                             ioThread {
+                                Log.d("Size", "$CAR_LIST_NAME.size")
                                 getInstance(context).carDAO().inserts(
                                     CAR_LIST_NAME.map { Car(0, it) }
                                 )
                             }
                         }
-                    })*/
+                    })
                     .build()
             }
             return instance!!
